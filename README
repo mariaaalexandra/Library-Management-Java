@@ -1,0 +1,57 @@
+TEMA 1 - LibroData
+
+PART 1:
+Am definit clasele Book, Language, Author, EditorialGroup, PublishingBrand, PublishingRetailer,
+Country, IPublishingArtifact. Am definit pentru fiecare clasa variabilele private si am adaugat
+getter si setter pentru fiecare in parte. Am definit IPublishing care contine metoda Publish()
+ce returneaza un String.
+
+PART 2:
+Am implementat metoda Publish() pentru clasele Book, EditorialGroup si PublishingBrand. Aceasta
+intoarce o variabila de tip String ce reprezinta afisarea cartii in foramt xml. In cadrul clasei
+Book am implementat metoda authorNames care intoarce un String reprezentand numele autorilor. Metoda noHeader returneaza un String cu detaliile cartii fara sa contina antetul <xml>, aceasta este apelata in clasele EditorialGroup si PublishingBrand.
+
+PART 3:
+Am definit clasele ReadBooks, ReadAuthors, ReadLanguages, ReadCountry, ReadPublishingBrands,
+ReadPublishingRetailers, in care citesc ficare entitate si o returnez.
+->In clasa ReadBooks initializez o lista de carti ce va fi returnata. Citesc linie cu linie din 
+fisier si setez fiecare atribut al cartii cu token ul corespunzator.
+->In clasa ReadAuthors initializez o lista de autori ce va fi returnata. Citesc linie cu linie din 
+fisier si setez fiecare atribut al autorului cu token ul corespunzator.
+->In clasa ReadCountry initializez o lista de tari ce va fi returnata. Citesc linie cu linie din 
+fisier si setez fiecare atribut al tarii cu token ul corespunzator.
+->In clasa ReadLeanguages initializez o lista de limbi ce va fi returnata. Citesc linie cu linie din fisier si setez fiecare atribut al limbii cu token ul corespunzator.
+->In clasa ReadEditorialGroup initializez o lista de grupuri ce va fi returnata. Citesc linie cu linie din fisier si setez fiecare atribut al grupului cu token ul corespunzator.
+->In clasa ReadPublishingBrands initializez o lista de brand ce va fi returnata. Citesc linie cu linie din fisier si setez fiecare atribut al brand ului cu token ul corespunzator.
+->In clasa ReadPublishingRetailers initializez o lista de retailer ce va fi returnata. Citesc linie cu line din fisier si setez fiecare atribut al retailer ului cu token ul corespunzator.
+Am definit clasele InitBooksAuthors, InitBrandsBooks, InitGroupsBooks, InitRetailerBooks, InitRetailerBrand, InitRetailerGroup, InitRetailersCountrie. In aceste clase fac legaturile intre
+cele doua entitati citite. 
+->In clasa InitBookAuthors am implementat metoda searchBook care returneaza o variabila de tip carte cu ID ul cautat din lista de carti. Metoda addAuthor adauga autorul cu ID cautat in lista 
+de autori a cartii. Metoda Read citeste linie cu linie din fisier si apleaza metodele searchBook si addAuthor pentru a face legaturile dintre carti si autori.
+->In clasa InitBrandsBooks am implementat metoda searchBrand care returneaza o variabila de tip brand cu ID ul cautat din lista de brands. Metoda addBook adauga cartea cu ID cautat in lista de carti a brandului. Metoda Read citeste linie cu linie din fisier si apleaza metodele searchBrand si addBook pentru a face legaturile dintre carti si brands.
+->In clasa InitGroupsBooks am implementat metoda searchGroup care returneaza o variabila de tip group cu ID ul cautat in lista de groups. Metoda addBook adauga carte cu ID cautat in lista de carti a grupului. Metoda Read citeste linie cu linie din fisier si apeleaza metodele searchGroup
+si addBook pentru a face legaturile dintre carti si groups.
+->In clasa InitRetailerBook am implementat metoda searchRetailer care returneaza o variabila de tip retailer cu ID ul cautat in lista de retailers. Metoda addArtifact adauga cartea pentru retailer ul cautat. In cazul in care inca nu a fost adaugat nimic, se aloca o lista de IPulishingArtifact, iar apoi se realizeaza inserarea cartii. Se seteaza lista de PublishingArtifacts a retailer ului cu noua lista.
+->In clasa InitRetailerBrand am implementat metoda ssearchRetailer care returneaza o variabila de tip retailer cu ID ul cautat in lista de retailers. Metoda addArtifact adauga brandul pentru retailer ul cautat. In cazul in care nu a fost adaugat nimic, se aloca o lista de IPulishingArtifact, iar apoi se realizeaza inserarea brandului. Se seteaza lista de PublishingArtifacts a retailer ului cu o noua lista.
+->In clasa InitRetailerGroup am implementat metoda searchRetailer care returneaza o variabila de tip retailer cu ID ul cautat in lista de retailers. Metoda addArtifact adauga groupul pentru retailer ul  cautat. In cazul in care nu a fost adaugat nimic, se aloca o lista de IPublishingArtifact, iar apoi se realizeaza inserarea grupului. Se seteaza lista de PublishingArtifacts a retailer ului cu o noua lista.
+->In clasa InitRetailersCountries am implementat metoda searchRetailer care returneaza o variabila de tip retailer cu ID ul cautat in lista de retailers. Metoda addCountry adauga in lista de tari a retailer ului cartea cu ID ul cautat. Metoda Read citeste linie cu linie din fisier si apeleaza metodele searchRetailer si addCountry pentru a face legaturile dintre tari si retailers.
+
+PART 4:
+In clasa Administration am implementat cele 5 metode:
+->Metoda getBooksForPublishingRetailerID returneaza o lista de carti pentru retailerul a carui ID este furnizat ca parametru al functiei. Se aloca lista de carti restulBooks care se va retuna in final. Se parcurg toti retailerii si se cauta retailerul cu ID cerut. Odata gasit se verifica tipul de artifact din lista de IPublishingArtifacts a retailerului. Daca este instanta a entitatii
+Book atunci se adauga in lista de carti resultBook. In cazul in care instanta este de tip EditorialGroup sau PublishingBrand se parcurge lista de carti a brandului, respectiv a grupului si se verifica daca cartea a fost adaugata deja sau trebuie inserata.
+->Metoda getLanguagesForPublishingRetailerID returneaza o lista de limbi pentru retailerul a carui ID este furnizat ca parametru al functiei. Se aloca o lista de intregi resultIDs in care sunt pastrate ID urile limbilor. Se parcurg tori retailerii si se cauta retailerul cu ID cerut. Odata gasit se verifica tipul de artifact din lista de IPublishingArtifact a retailerului. Daca este instanta a entitatii Book atunci se verifica daca limba cartii a fost adaugata inca sau nu. In cazul in care instanta este de tip EditorialGroup sau PublishingBrand se parcurge lista de carti a brandului, respectiv a grupului, si se verifica daca limba a fost adaugata sau nu. La final se aloca o lista de limbi si pentru fiecare limba din lista languages se verifica daca ID acesteia este in lista de intregi, caz in care se adauga limba in lista languagesRetailer returnata la finalul functiei.
+->Metoda getCountriesForBookID returneaza o lista de tari pentru cartea cu ID ul cautat. Se aloca o lista de tari countries. Se parcurg toti retailerii si fiecare artifact al acestora. Daca artifact este instanta a entitatii Book atunci se verifica daca este cartea cautata si se adauga in lista de carti toate tarile in care publica retailerul. Altfel, daca artifact este instanta a entitatii EditorialGroup sau PublishingBrand, se parcurg cartile brandului sau grupului si se verifica daca una dintre acestea coincide cu cartea cautata, caz in care se adauga in countries toate tarile in care retailerul publica.
+->Metoda getCommonBooksForRetailerIDs returneaza o lista de carti care reprezinta intersectia a doua liste de carti. Se aloca o lista de carti commonBooks ce va fi returnata. In lista firstRetailer se gasesc cartile primului retailer, iar in lista secondRetailer se gasesc cartile celui de-al doilea retailer. Se parcurg cartile din prima lista si se verifica daca exista si in a doua lista, caz in care se adauga in lista cu carti coumune.
+->Metoda getAllBooksForRetailerIDs returneaza o lista de carti care repreziinta reuniunea a doua liste de carti. Se aloca o lista de carti allBooks in care se regasesc initial cartile din prima lista. In lista secondRetailer se gasesc cartile celui de-al doilea retailer, iar in firstRetailer se gasesc cartile primului retailer. Se parcurg cartile din a doua lista si daca acestea nu se regasesc in lista allBooks se adauga.
+
+
+MAIN:
+---Se initializeaza in sistem listele: books, authors, languages, groups, countries, brands, retailers, si se formeaza legaturile prin apeleul metodelor Read din clasele de initializare.
+Pentru fiecare metoda am creat in directorul outputs un directorul cu numele metodei in care se 
+gasesc cate 5 fisiere cu outputul de la fiecare test. 
+--->Pentru prima metoda afisez cartile pentru retailerii 1, 2, 3, 4, 5.
+--->Pentru a doua metoda afisez limbile pentru retailerii 1, 2, 3, 4, 5.
+--->Pentru a treia metoda afisez tarile pentru cartile cu ID urile 204, 440, 483, 488, 489.
+--->Pentru a patra metoda afisez cartile comune pentru urmatoarele perechi de retaileri {(1,2), (2,3), (3,4), (4,5), (5,6)}.
+--->Pentru a cincea metoda afisez cartile totale pentru urmatoarel perechi de retaileri {(1,2), (2,3), (3,4), (4,5), (5,6)}.
